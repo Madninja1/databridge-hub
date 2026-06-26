@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Вход | DataBridge Hub{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <h1>Вход</h1>
+
+        {% if error %}
+            <div class="alert alert-error">
+                Неверный email или пароль.
+            </div>
+        {% endif %}
+
+        <form method="post" action="{{ path('app_login') }}">
+            <div class="form-row">
+                <label for="inputEmail">Email</label>
+                <input
+                    type="email"
+                    value="{{ last_username }}"
+                    name="_username"
+                    id="inputEmail"
+                    autocomplete="email"
+                    required
+                    autofocus
+                >
+            </div>
+
+            <div class="form-row">
+                <label for="inputPassword">Пароль</label>
+                <input
+                    type="password"
+                    name="_password"
+                    id="inputPassword"
+                    autocomplete="current-password"
+                    required
+                >
+            </div>
+
+            <input
+                type="hidden"
+                name="_csrf_token"
+                value="{{ csrf_token('authenticate') }}"
+            >
+
+            <button type="submit">Войти</button>
+            <a class="button button-secondary" href="{{ path('app_register') }}">Регистрация</a>
+        </form>
+    </div>
+{% endblock %}

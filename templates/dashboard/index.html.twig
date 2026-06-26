@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard | DataBridge Hub{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <h1>Dashboard</h1>
+
+        <p>Вы вошли как: <strong>{{ user.email }}</strong></p>
+
+        <h2>Что будет здесь дальше</h2>
+
+        <ul>
+            <li>Список компаний пользователя</li>
+            <li>Импорты файлов</li>
+            <li>Экспорты данных</li>
+            <li>Статусы задач RabbitMQ</li>
+            <li>API-токены</li>
+        </ul>
+    </div>
+{% endblock %}

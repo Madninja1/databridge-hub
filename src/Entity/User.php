@@ -11,10 +11,13 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'app_user')]
 #[ORM\UniqueConstraint(name: 'UNIQ_APP_USER_EMAIL', columns: ['email'])]
+#[UniqueEntity(fields: ['email'], message: 'Пользователь с таким email уже существует.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -22,6 +25,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message: 'Email обязателен.')]
+    #[Assert\Email(message: 'Некорректный email.')]
     #[ORM\Column(length: 180)]
     private string $email = '';
 
@@ -34,9 +39,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private string $password = '';
 
+    #[Assert\Length(max: 100)]
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $firstName = null;
 
+    #[Assert\Length(max: 100)]
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $lastName = null;
 

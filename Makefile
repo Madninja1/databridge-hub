@@ -135,3 +135,13 @@ db-reset:
 	docker compose exec php php bin/console doctrine:database:create
 	docker compose exec php php bin/console doctrine:migrations:migrate --no-interaction
 	docker compose exec php php bin/console doctrine:fixtures:load --no-interaction
+
+hash-password:
+	docker compose exec php php bin/console security:hash-password
+
+debug-security:
+	docker compose exec php php bin/console debug:config security
+
+debug-container-security:
+	docker compose exec php php bin/console debug:container security
+

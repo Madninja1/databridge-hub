@@ -33,4 +33,14 @@ class CompanyRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    public function existsBySlug(string $slug): bool
+    {
+        return $this->createQueryBuilder('company')
+            ->select('count(company.id)')
+            ->andWhere('company.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getSingleScalarResult() > 0;
+    }
 }
