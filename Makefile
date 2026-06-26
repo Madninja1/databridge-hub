@@ -110,3 +110,28 @@ make-command:
 		exit 1; \
 	fi
 	docker compose exec php php bin/console make:command $(name)
+
+migration:
+	docker compose exec php php bin/console make:migration
+
+migration-blank:
+	docker compose exec php php bin/console doctrine:migrations:generate
+
+migrate:
+	docker compose exec php php bin/console doctrine:migrations:migrate --no-interaction
+
+migrate-prev:
+	docker compose exec php php bin/console doctrine:migrations:migrate prev
+
+
+fixtures:
+	docker compose exec php php bin/console doctrine:fixtures:load --no-interaction
+
+schema:
+	docker compose exec php php bin/console doctrine:schema:validate
+
+db-reset:
+	docker compose exec php php bin/console doctrine:database:drop --force --if-exists
+	docker compose exec php php bin/console doctrine:database:create
+	docker compose exec php php bin/console doctrine:migrations:migrate --no-interaction
+	docker compose exec php php bin/console doctrine:fixtures:load --no-interaction
