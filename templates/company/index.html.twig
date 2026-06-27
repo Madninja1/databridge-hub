@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Компании | DataBridge Hub{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <h1>Компании</h1>
+
+        {% if companies is empty %}
+            <p>У вас пока нет компаний.</p>
+        {% else %}
+            <ul>
+                {% for company in companies %}
+                    <li>
+                        <a href="{{ path('app_company_show', { slug: company.slug }) }}">
+                            {{ company.name }}
+                        </a>
+
+                        {% if is_granted('COMPANY_MANAGE', company) %}
+                            <span>— управление доступно</span>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+{% endblock %}

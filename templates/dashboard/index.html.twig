@@ -8,14 +8,36 @@
 
         <p>Вы вошли как: <strong>{{ user.email }}</strong></p>
 
-        <h2>Что будет здесь дальше</h2>
+        <h2>Ваши компании</h2>
+
+        {% if companies is empty %}
+            <p>Компаний пока нет.</p>
+        {% else %}
+            <ul>
+                {% for company in companies %}
+                    <li>
+                        <a href="{{ path('app_company_show', { slug: company.slug }) }}">
+                            {{ company.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <p>
+            <a class="button" href="{{ path('app_company_index') }}">
+                Все компании
+            </a>
+        </p>
+
+        <h2>Что будет дальше</h2>
 
         <ul>
-            <li>Список компаний пользователя</li>
+            <li>Участники компании</li>
             <li>Импорты файлов</li>
             <li>Экспорты данных</li>
-            <li>Статусы задач RabbitMQ</li>
             <li>API-токены</li>
+            <li>Статусы RabbitMQ-задач</li>
         </ul>
     </div>
 {% endblock %}

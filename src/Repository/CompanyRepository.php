@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Company;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -42,5 +43,29 @@ class CompanyRepository extends ServiceEntityRepository
             ->setParameter('slug', $slug)
             ->getQuery()
             ->getSingleScalarResult() > 0;
+    }
+
+    public function findForUser(User $user): array
+    {
+        return $this->createQueryBuilder('company')
+            ->innerJoin('company.memberships', 'membership')
+            ->andWhere('membership.user = :user')
+            ->andWhere('company.isActive = :isActive')
+            ->setParameter('user', $user)
+            ->setParameter('isActive', true)
+            ->orderBy('company.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findOneActiveBySlug(string $slug): ?Company
+    {
+        return $this->createQueryBuilder('company')
+            ->andWhere('company.slug = :slug')
+            ->andWhere('company.isActive = :isActive')
+            ->setParameter('slug', $slug)
+            ->setParameter('isActive', true)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

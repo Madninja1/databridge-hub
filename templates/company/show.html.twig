@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ company.name }} | DataBridge Hub{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <h1>{{ company.name }}</h1>
+
+        <p>
+            <strong>Slug:</strong> {{ company.slug }}
+        </p>
+
+        <p>
+            <strong>Статус:</strong>
+            {% if company.active %}
+                активна
+            {% else %}
+                неактивна
+            {% endif %}
+        </p>
+
+        <h2>Разделы</h2>
+
+        <ul>
+            <li>Импорты — скоро</li>
+            <li>Экспорты — скоро</li>
+
+            {% if is_granted('COMPANY_API_TOKENS', company) %}
+                <li>API-токены — скоро</li>
+            {% endif %}
+
+            {% if is_granted('COMPANY_MEMBERS', company) %}
+                <li>Участники — скоро</li>
+            {% endif %}
+
+            {% if is_granted('COMPANY_MANAGE', company) %}
+                <li>Настройки компании — скоро</li>
+            {% endif %}
+        </ul>
+
+        <p>
+            <a class="button button-secondary" href="{{ path('app_company_index') }}">
+                Назад к компаниям
+            </a>
+        </p>
+    </div>
+{% endblock %}

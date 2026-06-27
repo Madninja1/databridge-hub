@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Company;
 use App\Entity\CompanyMembership;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -32,5 +34,13 @@ class CompanyMembershipRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findOneForUserAndCompany(User $user, Company $company): ?CompanyMembership
+    {
+        return $this->findOneBy([
+            'user' => $user,
+            'company' => $company
+        ]);
     }
 }

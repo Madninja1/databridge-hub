@@ -117,6 +117,9 @@
 
     <nav>
         {% if app.user %}
+            <a href="{{ path('app_dashboard') }}">Dashboard</a>
+            <a href="{{ path('app_company_index') }}">Компании</a>
+
             <span>{{ app.user.userIdentifier }}</span>
 
             <form class="logout-form" method="post" action="{{ path('app_logout') }}">
