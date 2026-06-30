@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Главная | DataBridge Hub{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <h1>DataBridge Hub</h1>
+
+        <p>
+            Учебный Symfony-проект для API, авторизации, токенов,
+            RabbitMQ, Redis, импортов и экспортов.
+        </p>
+
+        {% if app.user %}
+            <p>
+                Вы вошли как <strong>{{ app.user.userIdentifier }}</strong>.
+            </p>
+
+            <p>
+                <a class="button" href="{{ path('app_dashboard') }}">
+                    Перейти в Dashboard
+                </a>
+
+                <a class="button button-secondary" href="{{ path('app_company_index') }}">
+                    Компании
+                </a>
+            </p>
+        {% else %}
+            <p>
+                Для работы с системой нужно войти или зарегистрироваться.
+            </p>
+
+            <p>
+                <a class="button" href="{{ path('app_login') }}">
+                    Войти
+                </a>
+
+                <a class="button button-secondary" href="{{ path('app_register') }}">
+                    Зарегистрироваться
+                </a>
+            </p>
+        {% endif %}
+    </div>
+{% endblock %}
